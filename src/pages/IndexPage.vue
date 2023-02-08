@@ -13,10 +13,65 @@
 <script setup lang="ts">
 import { Todo, Meta } from 'components/models';
 import ExampleComponent from 'components/ExampleComponent.vue';
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { fetchDogBreeds, getByBreed } from 'src/services/DogService';
+import { useStore } from 'vuex';
+import { store } from 'quasar/wrappers';
+
+const store = useStore();
 
 const breed = ref<string>('');
 const allBreeds = ref<string[]>([]);
+
+watch(breed, (val) => {
+  if (val !== '') {
+    getDogsByBreed(val);
+  }
+});
+
+function capitalizeFirstLetter(letter: string): string {
+  return letter.charAt(0).toUpperCase() + letter.slice(1);
+}
+
+const getAllDogBreeds = (breeds: object) => {
+  for (const [key, value] of Object.entries(breeds)) {
+    if (value.length === 0) {
+      allBreeds.value.push(capitalizeFirstLetter(key));
+    } else {
+      value.forEach((item) => {
+        allBreeds.value.push(`${capitalizeFirstLetter(item)} ${capitalizeFirstLetter(key)}`);
+      });
+    }
+  };
+  store.dispatch('dogs/setDogBreeds', allBreeds.value);
+  console.log(store.getters['dogs/getDogBreeds']);
+};
+
+
+
+const dogBreeds = computed(() => store.getters['dogs/getDogBreeds']);
+console.log(dogBreeds);
+if (dogBreeds.value.length === 0) {
+  console.log('dogbreeds', dogBreeds.value.length);
+  fetchDogBreeds()
+    .then((res) => {
+      console.log(res);
+      getAllDogBreeds(res.message);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+const getDogsByBreed = (breedName: string) => {
+  getByBreed(breedName.toLowerCase())
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+};
 
 // const todos = ref<Todo[]>([
 //   {
