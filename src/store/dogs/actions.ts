@@ -11,6 +11,9 @@ const actions: ActionTree<DogStateInterface, StateInterface> = {
   },
   setBreedName ({ commit }, payload: string) {
     commit('SET_BREEDNAME', payload);
+  },
+  clearDogList ({ commit }) {
+    commit('CLEAR_DOGLIST');
   }
 };
 

@@ -1,12 +1,29 @@
 <template>
   <q-page class="row items-start justify-evenly">
-    <!-- <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component> -->
-    <q-select class="q-mt-lg col-4" outlined dense v-model="breed" :options="allBreeds" label="Select Breed" />
+    <div class="col">
+      <div class="row">
+        <q-select class="q-mt-lg col-4" outlined dense v-model="breed" :options="allBreeds" label="Select Breed" />
+      </div>
+      <div class="row q-mt-md">
+        <div class="col-12">
+          <div class="row">
+            <div v-for="(image, index) in dogList" :key="index" class="dog-image col-12 col-sm-6 col-md-4 col-lg-3 q-pa-sm">
+              <q-img
+                :src="image"
+                no-spinner
+                style="height: 250px; width: 100%"
+                class="dog-image"
+              />
+            </div>
+            <template v-if="dogList.length === 0">
+              <div v-for="(image, index) in 50" :key="index" class="dog-image col-12 col-sm-6 col-md-4 col-lg-3 q-pa-sm">
+                <q-skeleton height="250px" width="100%" />
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 
@@ -23,8 +40,11 @@ const store = useStore();
 const breed = ref<string>('');
 const allBreeds = ref<string[]>([]);
 
+const dogList = computed(() => store.getters['dogs/getDogList']);
+
 watch(breed, (val) => {
   if (val !== '') {
+    store.dispatch('dogs/clearDogList');
     getDogsByBreed(val);
   }
 });
@@ -44,18 +64,18 @@ const getAllDogBreeds = (breeds: object) => {
     }
   };
   store.dispatch('dogs/setDogBreeds', allBreeds.value);
-  console.log(store.getters['dogs/getDogBreeds']);
+  // console.log(store.getters['dogs/getDogBreeds']);
 };
 
 
 
 const dogBreeds = computed(() => store.getters['dogs/getDogBreeds']);
-console.log(dogBreeds);
+// console.log(dogBreeds);
 if (dogBreeds.value.length === 0) {
-  console.log('dogbreeds', dogBreeds.value.length);
+  // console.log('dogbreeds', dogBreeds.value.length);
   fetchDogBreeds()
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       getAllDogBreeds(res.message);
     })
     .catch((err) => {
@@ -64,14 +84,24 @@ if (dogBreeds.value.length === 0) {
 }
 
 const getDogsByBreed = (breedName: string) => {
-  getByBreed(breedName.toLowerCase())
+  let payload;
+  const breedArr = breedName.split(' ');
+  if (breedArr.length > 1) {
+    payload = `${breedArr[1]}/${breedArr[0]}`;
+  } else {
+    payload = breedArr[0];
+  }
+  getByBreed(payload.toLowerCase())
     .then((res) => {
-      console.log(res);
+      // console.log(res);
+      store.dispatch('dogs/setDogList', res.message);
     })
     .catch((err) => {
       console.log(err);
     })
 };
+
+getDogsByBreed('African');
 
 // const todos = ref<Todo[]>([
 //   {
@@ -99,3 +129,8 @@ const getDogsByBreed = (breedName: string) => {
 //   totalCount: 1200
 // });
 </script>
+<style>
+.dog-image {
+  border-radius: 20px;
+}
+</style>

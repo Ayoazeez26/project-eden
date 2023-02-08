@@ -10,6 +10,9 @@ const mutation: MutationTree<DogStateInterface> = {
   },
   SET_BREEDNAME (state, breedName: string) {
     state.breedName = breedName;
+  },
+  CLEAR_DOGLIST (state) {
+    state.dogList = [];
   }
 };
 
