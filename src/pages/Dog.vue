@@ -2,10 +2,8 @@
   <q-page class="row items-start justify-evenly">
     <div class="col">
       <div class="row">
-        <search-dogs @getDogs="getDogsByBreed" class="col-12 col-md-4" />
-        <!-- <q-select class="q-mt-lg col-4" outlined dense v-model="breed" :options="allBreeds" label="Select Breed" /> -->
+        <q-select class="q-mt-lg col-4" outlined dense v-model="breed" :options="allBreeds" label="Select Breed" />
       </div>
-      <p class="dog-breed text-center text-h5 q-mb-md">{{ breedName }}</p>
       <div class="row q-mt-md">
         <div class="col-12">
           <div class="row">
@@ -30,17 +28,58 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { getByBreed } from 'src/services/DogService';
-import SearchDogs from 'src/components/SearchDogs.vue';
+import { ref, computed, watch } from 'vue';
+import { fetchDogBreeds, getByBreed } from 'src/services/DogService';
 import { useStore } from 'vuex';
 import { store } from 'quasar/wrappers';
 
 const store = useStore();
 
+const breed = ref<string>('');
+const allBreeds = ref<string[]>([]);
 
 const dogList = computed(() => store.getters['dogs/getDogList']);
-const breedName = computed(() => store.getters['dogs/getBreedName']);
+
+watch(breed, (val) => {
+  if (val !== '') {
+    store.dispatch('dogs/clearDogList');
+    getDogsByBreed(val);
+  }
+});
+
+function capitalizeFirstLetter(letter: string): string {
+  return letter.charAt(0).toUpperCase() + letter.slice(1);
+}
+
+const getAllDogBreeds = (breeds: object) => {
+  for (const [key, value] of Object.entries(breeds)) {
+    if (value.length === 0) {
+      allBreeds.value.push(capitalizeFirstLetter(key));
+    } else {
+      value.forEach((item) => {
+        allBreeds.value.push(`${capitalizeFirstLetter(item)} ${capitalizeFirstLetter(key)}`);
+      });
+    }
+  };
+  store.dispatch('dogs/setDogBreeds', allBreeds.value);
+  // console.log(store.getters['dogs/getDogBreeds']);
+};
+
+
+
+const dogBreeds = computed(() => store.getters['dogs/getDogBreeds']);
+// console.log(dogBreeds);
+if (dogBreeds.value.length === 0) {
+  // console.log('dogbreeds', dogBreeds.value.length);
+  fetchDogBreeds()
+    .then((res) => {
+      // console.log(res);
+      getAllDogBreeds(res.message);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
 
 const getDogsByBreed = (breedName: string) => {
   let payload;
@@ -88,13 +127,8 @@ getDogsByBreed('African');
 //   totalCount: 1200
 // });
 </script>
-<style lang="scss">
-.dog {
-  &-breed {
-    font-weight: 600;
-  }
-  &-image {
-    border-radius: 20px;
-  }
+<style>
+.dog-image {
+  border-radius: 20px;
 }
 </style>

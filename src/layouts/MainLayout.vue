@@ -4,7 +4,7 @@
       <q-toolbar>
 
         <q-toolbar-title>
-          Doggy Co
+          DoggyCo
         </q-toolbar-title>
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
