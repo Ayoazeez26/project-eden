@@ -3,14 +3,16 @@ export interface DogStateInterface {
   dogList: string[];
   breedName: string;
   dogImage: string;
+  firstTime: boolean;
 }
 
 function state(): DogStateInterface {
   return {
     dogBreeds: [],
     dogList: [],
-    breedName: '',
-    dogImage: 'African'
+    breedName: 'African',
+    dogImage: '',
+    firstTime: true
   }
 }
 

@@ -17,6 +17,9 @@ const actions: ActionTree<DogStateInterface, StateInterface> = {
   },
   setDogImage ({ commit }, payload: string) {
     commit('SET_DOGIMAGE', payload);
+  },
+  changeFirstTime ({ commit }) {
+    commit('CHANGE_FIRSTTIME');
   }
 };
 

@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, defineEmits } from 'vue'
-import { fetchDogBreeds, getByBreed } from 'src/services/DogService';
+import { fetchDogBreeds } from 'src/services/DogService';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -50,6 +50,11 @@ watch(breed, (val) => {
 const breedName = computed(() => store.getters['dogs/getBreedName']);
 if (breedName.value) {
   breed.value = breedName.value;
+  const firstTime = computed(() => store.getters['dogs/getFirstTime']);
+  if (firstTime.value) {
+    emit('getDogs', breed.value);
+    store.dispatch('dogs/changeFirstTime');
+  }
 }
 
 

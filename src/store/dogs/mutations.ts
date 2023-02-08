@@ -16,6 +16,9 @@ const mutation: MutationTree<DogStateInterface> = {
   },
   SET_DOGIMAGE (state, dogImage: string) {
     state.dogImage = dogImage;
+  },
+  CHANGE_FIRSTTIME (state) {
+    state.firstTime = false;
   }
 };
 
