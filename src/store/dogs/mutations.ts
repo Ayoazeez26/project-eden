@@ -13,6 +13,9 @@ const mutation: MutationTree<DogStateInterface> = {
   },
   CLEAR_DOGLIST (state) {
     state.dogList = [];
+  },
+  SET_DOGIMAGE (state, dogImage: string) {
+    state.dogImage = dogImage;
   }
 };
 

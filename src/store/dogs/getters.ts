@@ -6,6 +6,7 @@ export type Getters = {
   getDogList(state: DogStateInterface): string[] | [];
   getDogBreeds(state: DogStateInterface): string[] | [];
   getBreedName(state: DogStateInterface): string | '';
+  getDogImage(state: DogStateInterface): string | '';
 }
 
 const getters: GetterTree<DogStateInterface, StateInterface> = {
@@ -17,6 +18,9 @@ const getters: GetterTree<DogStateInterface, StateInterface> = {
   },
   getBreedName(state) {
     return state.breedName;
+  },
+  getDogImage(state) {
+    return state.dogImage;
   }
 };
 

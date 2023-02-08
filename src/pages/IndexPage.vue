@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-start justify-evenly">
+  <q-page class="dog row items-start justify-evenly">
     <div class="col">
       <div class="row">
         <search-dogs @getDogs="getDogsByBreed" class="col-12 col-md-4" />
@@ -14,6 +14,7 @@
                 :image="image"
                 styleName="height: 250px; width: 100%"
                 class="dog-image"
+                @click="goToDog(image)"
               />
             </div>
             <template v-if="dogList.length === 0">
@@ -34,8 +35,10 @@ import DogImage from 'src/components/DogImage.vue';
 import SkeletonLoader from 'src/components/SkeletonLoader.vue';
 import { useStore } from 'vuex';
 import { store } from 'quasar/wrappers';
+import { useRouter } from 'vue-router';
 
 const store = useStore();
+const router = useRouter();
 
 
 const dogList = computed(() => store.getters['dogs/getDogList']);
@@ -59,41 +62,23 @@ const getDogsByBreed = (breedName: string) => {
     })
 };
 
-getDogsByBreed('African');
+// getDogsByBreed('African');
 
-// const todos = ref<Todo[]>([
-//   {
-//     id: 1,
-//     content: 'ct1'
-//   },
-//   {
-//     id: 2,
-//     content: 'ct2'
-//   },
-//   {
-//     id: 3,
-//     content: 'ct3'
-//   },
-//   {
-//     id: 4,
-//     content: 'ct4'
-//   },
-//   {
-//     id: 5,
-//     content: 'ct5'
-//   }
-// ]);
-// const meta = ref<Meta>({
-//   totalCount: 1200
-// });
+const goToDog = (image: string) => {
+  store.dispatch('dogs/setDogImage', image);
+  router.push({ name: 'Dog' });
+};
 </script>
 <style lang="scss">
 .dog {
+  max-width: 1536px;
+  margin: 0 auto;
   &-breed {
     font-weight: 600;
   }
   &-image {
     border-radius: 20px;
+    cursor: pointer;
   }
 }
 </style>

@@ -39,12 +39,18 @@ const breed = ref<string>('');
 const allBreeds = ref<string[]>([]);
 
 watch(breed, (val) => {
-  if (val !== '') {
+  if (val !== '' && val !== breedName.value) {
     store.dispatch('dogs/setBreedName', val);
     store.dispatch('dogs/clearDogList');
     emit('getDogs', val);
   }
 });
+
+
+const breedName = computed(() => store.getters['dogs/getBreedName']);
+if (breedName.value) {
+  breed.value = breedName.value;
+}
 
 
 function capitalizeFirstLetter(letter: string): string {

@@ -1,7 +1,9 @@
 <template>
-  <q-page class="row items-start justify-evenly">
+  <q-page class="dog row items-start justify-evenly q-px-md q-px-md-xl">
     <div class="col">
-      <div class="row">
+      <q-btn flat :ripple="false" color="black" icon="mdi-arrow-left" label="Back" @click="$router.go(-1)" />
+      <h1 class="dog-name">{{ breedName }}</h1>
+      <!-- <div class="row">
         <q-select class="q-mt-lg col-4" outlined dense v-model="breed" :options="allBreeds" label="Select Breed" />
       </div>
       <div class="row q-mt-md">
@@ -22,7 +24,7 @@
             </template>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </q-page>
 </template>
@@ -35,100 +37,20 @@ import { store } from 'quasar/wrappers';
 
 const store = useStore();
 
-const breed = ref<string>('');
-const allBreeds = ref<string[]>([]);
 
-const dogList = computed(() => store.getters['dogs/getDogList']);
+const dogImage = computed(() => store.getters['dogs/getDogImage']);
+const breedName = computed(() => store.getters['dogs/getBreedName']);
 
-watch(breed, (val) => {
-  if (val !== '') {
-    store.dispatch('dogs/clearDogList');
-    getDogsByBreed(val);
-  }
-});
-
-function capitalizeFirstLetter(letter: string): string {
-  return letter.charAt(0).toUpperCase() + letter.slice(1);
-}
-
-const getAllDogBreeds = (breeds: object) => {
-  for (const [key, value] of Object.entries(breeds)) {
-    if (value.length === 0) {
-      allBreeds.value.push(capitalizeFirstLetter(key));
-    } else {
-      value.forEach((item) => {
-        allBreeds.value.push(`${capitalizeFirstLetter(item)} ${capitalizeFirstLetter(key)}`);
-      });
-    }
-  };
-  store.dispatch('dogs/setDogBreeds', allBreeds.value);
-  // console.log(store.getters['dogs/getDogBreeds']);
-};
-
-
-
-const dogBreeds = computed(() => store.getters['dogs/getDogBreeds']);
-// console.log(dogBreeds);
-if (dogBreeds.value.length === 0) {
-  // console.log('dogbreeds', dogBreeds.value.length);
-  fetchDogBreeds()
-    .then((res) => {
-      // console.log(res);
-      getAllDogBreeds(res.message);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-}
-
-const getDogsByBreed = (breedName: string) => {
-  let payload;
-  const breedArr = breedName.split(' ');
-  if (breedArr.length > 1) {
-    payload = `${breedArr[1]}/${breedArr[0]}`;
-  } else {
-    payload = breedArr[0];
-  }
-  getByBreed(payload.toLowerCase())
-    .then((res) => {
-      // console.log(res);
-      store.dispatch('dogs/setDogList', res.message);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-};
-
-getDogsByBreed('African');
-
-// const todos = ref<Todo[]>([
-//   {
-//     id: 1,
-//     content: 'ct1'
-//   },
-//   {
-//     id: 2,
-//     content: 'ct2'
-//   },
-//   {
-//     id: 3,
-//     content: 'ct3'
-//   },
-//   {
-//     id: 4,
-//     content: 'ct4'
-//   },
-//   {
-//     id: 5,
-//     content: 'ct5'
-//   }
-// ]);
-// const meta = ref<Meta>({
-//   totalCount: 1200
-// });
 </script>
-<style>
-.dog-image {
-  border-radius: 20px;
+<style lang="scss" scoped>
+.dog {
+  max-width: 1536px;
+  margin: 0 auto;
+  &-name {
+    font-size: 40px;
+  }
+  &-image {
+    border-radius: 20px;
+  }
 }
 </style>
