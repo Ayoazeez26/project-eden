@@ -9,18 +9,15 @@
       <div class="row q-mt-md">
         <div class="col-12">
           <div class="row">
-            <div v-for="(image, index) in dogList" :key="index" class="dog-image col-12 col-sm-6 col-md-4 col-lg-3 q-pa-sm">
-              <q-img
-                :src="image"
-                no-spinner
-                style="height: 250px; width: 100%"
+            <div v-for="(image, index) in dogList" :key="index" class="dog-image col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 q-pa-sm">
+              <dog-image
+                :image="image"
+                styleName="height: 250px; width: 100%"
                 class="dog-image"
               />
             </div>
             <template v-if="dogList.length === 0">
-              <div v-for="(image, index) in 50" :key="index" class="dog-image col-12 col-sm-6 col-md-4 col-lg-3 q-pa-sm">
-                <q-skeleton height="250px" width="100%" />
-              </div>
+              <skeleton-loader :showCount="50" heightVal="250px" class="dog-image col-12 col-sm-6 col-md-4 col-lg-3 q-pa-sm" />
             </template>
           </div>
         </div>
@@ -33,6 +30,8 @@
 import { ref, computed } from 'vue';
 import { getByBreed } from 'src/services/DogService';
 import SearchDogs from 'src/components/SearchDogs.vue';
+import DogImage from 'src/components/DogImage.vue';
+import SkeletonLoader from 'src/components/SkeletonLoader.vue';
 import { useStore } from 'vuex';
 import { store } from 'quasar/wrappers';
 
