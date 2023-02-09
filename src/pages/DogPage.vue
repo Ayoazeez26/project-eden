@@ -1,14 +1,14 @@
 <template>
-  <q-page class="dog row items-start justify-evenly q-px-md q-px-md-xl">
+  <q-page class="dog row items-start justify-evenly q-px-md-xl">
     <div class="col q-mt-md">
       <q-btn flat :ripple="false" color="black" icon="mdi-arrow-left" label="Back" @click="$router.go(-1)" />
       <h1 class="dog-name q-my-md q-ml-sm">{{ breedName }}</h1>
       <div class="row">
-        <div class="col-12 col-md-8 col-lg-6 q-ml-sm">
+        <div class="col-12 col-md-8 col-lg-6 q-px-sm">
           <img :src="dogImage" :alt="breedName" class="dog-image" />
         </div>
       </div>
-      <p class="q-my-md q-ml-sm dog-text">More images from {{ breedName }}</p>
+      <p class="q-my-md q-ml-sm dog-text">More images of {{ breedName }} dogs</p>
       <div class="row q-mt-md">
         <div class="col-12">
           <div class="row">

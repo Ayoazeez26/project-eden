@@ -1,9 +1,8 @@
 <template>
   <q-page class="dog row items-start justify-evenly">
-    <div class="col">
-      <div class="row">
+    <div class="col relative">
+      <div class="search-container row">
         <search-dogs @getDogs="getDogsByBreed" class="col-12 col-md-4" />
-        <!-- <q-select class="q-mt-lg col-4" outlined dense v-model="breed" :options="allBreeds" label="Select Breed" /> -->
       </div>
       <p class="dog-breed text-center text-primary text-h5 q-mb-md">{{ breedName }}</p>
       <div class="row q-mt-md">
@@ -71,6 +70,7 @@ const goToDog = (image: string) => {
 </script>
 <style lang="scss">
 .dog {
+  position: relative;
   max-width: 1536px;
   margin: 0 auto;
   &-breed {
@@ -81,5 +81,14 @@ const goToDog = (image: string) => {
     border-radius: 20px;
     cursor: pointer;
   }
+}
+.search-container {
+  position: sticky;
+  top: 50px;
+  z-index: 5;
+  background-color: white;
+}
+.relative {
+  position: relative;
 }
 </style>

@@ -4,10 +4,12 @@
       <div class="col">
         <p class="search-label q-mb-none">Search Breeds</p>
         <q-select
+          ref="selectDropdown"
           filled
           v-model="breed"
           label=""
           use-input
+          behavior="menu"
           hide-selected
           fill-input
           input-debounce="0"
@@ -40,9 +42,11 @@ const emit = defineEmits(['getDogs']);
 
 const breed = ref<string>('');
 const allBreeds = ref<string[]>([]);
+const selectDropdown = ref<HTMLDivElement>();
 
 watch(breed, (val) => {
   if (val !== '' && val !== breedName.value) {
+    selectDropdown.value?.blur();
     store.dispatch('dogs/setBreedName', val);
     store.dispatch('dogs/clearDogList');
     emit('getDogs', val);
