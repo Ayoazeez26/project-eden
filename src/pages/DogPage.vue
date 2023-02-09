@@ -92,6 +92,9 @@ const goToDog = (image: string) => {
     line-height: initial;
     font-weight: 500;
     color: $primary;
+    @media screen and (max-width: 768px) {
+      font-size: 40px;
+    }
   }
   &-image {
     border-radius: 20px;
