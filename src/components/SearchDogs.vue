@@ -1,27 +1,30 @@
 <template>
   <div class="q-pa-md">
     <div class="q-gutter-md row">
-      <q-select
-        filled
-        v-model="breed"
-        label="Search Breeds"
-        use-input
-        hide-selected
-        fill-input
-        input-debounce="0"
-        :options="options"
-        @filter="filterFn"
-        style="width: 250px; padding-bottom: 32px"
-        v-bind="$attrs"
-      >
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-grey">
-              No results
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
+      <div class="col">
+        <p class="search-label q-mb-none">Search Breeds</p>
+        <q-select
+          filled
+          v-model="breed"
+          label=""
+          use-input
+          hide-selected
+          fill-input
+          input-debounce="0"
+          :options="options"
+          @filter="filterFn"
+          style="width: 250px; padding-bottom: 20px"
+          v-bind="$attrs"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">
+                No results
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+      </div>
     </div>
   </div>
 </template>
@@ -102,3 +105,8 @@ const filterFn = (val, update, abort) => {
 };
 
 </script>
+<style lang="scss" scoped>
+.search-label {
+  font-size: 18px;
+}
+</style>
