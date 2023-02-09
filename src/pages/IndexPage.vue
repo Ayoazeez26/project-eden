@@ -5,7 +5,7 @@
         <search-dogs @getDogs="getDogsByBreed" class="col-12 col-md-4" />
         <!-- <q-select class="q-mt-lg col-4" outlined dense v-model="breed" :options="allBreeds" label="Select Breed" /> -->
       </div>
-      <p class="dog-breed text-center text-h5 q-mb-md">{{ breedName }}</p>
+      <p class="dog-breed text-center text-primary text-h5 q-mb-md">{{ breedName }}</p>
       <div class="row q-mt-md">
         <div class="col-12">
           <div class="row">
@@ -74,7 +74,8 @@ const goToDog = (image: string) => {
   max-width: 1536px;
   margin: 0 auto;
   &-breed {
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 40px;
   }
   &-image {
     border-radius: 20px;

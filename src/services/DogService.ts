@@ -32,3 +32,14 @@ export const getByBreed = async (data: string): Promise<unknown> => {
     return Promise.reject(e);
   }
 };
+
+export const getRandomByBreed = async (data: string): Promise<unknown> => {
+  try {
+    const response = await axios.get(`/breed/${data}/images/random/6`);
+    if (response) {
+      return Promise.resolve(response.data);
+    }
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};

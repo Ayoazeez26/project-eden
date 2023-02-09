@@ -10,7 +10,7 @@ function state(): DogStateInterface {
   return {
     dogBreeds: [],
     dogList: [],
-    breedName: 'African',
+    breedName: 'Rottweiler',
     dogImage: '',
     firstTime: true
   }
