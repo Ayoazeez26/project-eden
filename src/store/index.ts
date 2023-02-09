@@ -1,6 +1,7 @@
 import { store } from 'quasar/wrappers'
 import { InjectionKey } from 'vue'
 import { Router } from 'vue-router'
+import VuexPersistence from 'vuex-persist'
 import {
   createStore,
   Store as VuexStore,
@@ -51,6 +52,7 @@ export default store(function (/* { ssrContext } */) {
       // example
       dogs
     },
+    plugins: [new VuexPersistence().plugin],
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only

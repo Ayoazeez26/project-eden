@@ -35,6 +35,8 @@ module.exports = configure(function (/* ctx */) {
       'directive'
     ],
 
+    transpileDependencies: ['vuex-persist'],
+
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: [
       'app.scss'

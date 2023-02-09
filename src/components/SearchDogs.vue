@@ -35,6 +35,7 @@
 import { ref, computed, watch, defineEmits } from 'vue'
 import { fetchDogBreeds } from 'src/services/DogService';
 import { useStore } from 'vuex';
+import { K } from 'app/dist/spa/assets/index.c7539644';
 
 const store = useStore();
 
@@ -47,6 +48,11 @@ const selectDropdown = ref<HTMLDivElement>();
 watch(breed, (val) => {
   if (val !== '' && val !== breedName.value) {
     selectDropdown.value?.blur();
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
     store.dispatch('dogs/setBreedName', val);
     store.dispatch('dogs/clearDogList');
     emit('getDogs', val);
