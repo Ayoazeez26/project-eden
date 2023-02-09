@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-lazyload>
     <q-img
       :src="image"
       no-spinner

@@ -21,7 +21,7 @@
               />
             </div>
             <template v-if="moreDogs.length === 0">
-              <skeleton-loader :showCount="6" heightVal="250px" class="col-12 col-sm-6 col-md-4 col-lg-3 q-pa-sm" />
+              <skeleton-loader :showCount="6" heightVal="200px" class="col-6 col-md-3 col-lg-2 q-pa-sm" />
             </template>
           </div>
         </div>
